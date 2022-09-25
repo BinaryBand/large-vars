@@ -1,5 +1,5 @@
-bigint: main.o word.o integer.o
-	g++ main.o word.o integer.o -o bigint
+largevars: main.o word.o integer.o
+	g++ main.o word.o integer.o -o largevars
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -11,4 +11,4 @@ integer.o: src/datatypes/integer.cpp
 	g++ -c src/datatypes/integer.cpp
 
 clean:
-	rm *.o bigint
+	rm *.o largevars
