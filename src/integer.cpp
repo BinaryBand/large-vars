@@ -20,6 +20,15 @@ void Integer::sub(Word& b) {
     }
 }
 
+void Integer::mult(Word& b) {
+    Word borrow;
+    while (b.toBool()) {
+        borrow = ~(*this) & b;
+        *this ^= b;
+        b = borrow << 1;
+    }
+}
+
 void Integer::flip() {
     int i = 0;
     for (; i < size; i++) {

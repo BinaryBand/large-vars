@@ -1,4 +1,4 @@
-#include "./src/datatypes/integer.h"
+#include "./src/integer.h"
 #include <iostream>
 using namespace std;
 
@@ -21,16 +21,16 @@ string bin(Word w) {
 int main(int argc, char* argv[]) {
     Integer seven = 7;
     Integer twelve = 12;
-    Integer nineteen = 7 + 12;
+    Integer nineteen = seven + twelve;
 
     cout << bin(seven) << ' ' << seven << endl;
     cout << bin(twelve) << ' ' << twelve << endl;
     cout << bin(nineteen) << ' ' << nineteen << endl;
 
-    twelve = 19 - 7;
+    twelve = nineteen - seven;
     cout << bin(twelve) << ' ' << twelve << endl;
 
-    Integer negative = 7 - 19;
+    Integer negative = seven - nineteen;
     cout << bin(negative) << ' ' << negative << endl;
 
     return 0;

@@ -4,11 +4,11 @@ a.out: main.o word.o integer.o
 main.o: main.cpp
 	g++ -c main.cpp
 
-word.o: src/datatypes/word.cpp
-	g++ -c src/datatypes/word.cpp
+word.o: src/word.cpp
+	g++ -c src/word.cpp
 
-integer.o: src/datatypes/integer.cpp
-	g++ -c src/datatypes/integer.cpp
+integer.o: src/integer.cpp
+	g++ -c src/integer.cpp
 
 clean:
 	rm *.o a.out

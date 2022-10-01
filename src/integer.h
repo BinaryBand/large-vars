@@ -5,6 +5,7 @@ class Integer: public Word {
 private:
     void add(Word&);
     void sub(Word&);
+    void mult(Word&);
     void flip();
 public:
     Integer(): Word() {}
