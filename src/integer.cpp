@@ -2,31 +2,46 @@
 #include <cmath>
 
 
-void Integer::add(Word& b) {
+void Integer::add(const Word& b) {
+    Integer c = b;
     Word carry;
-    while (b.toBool()) {
-        carry = *this & b;
-        *this ^= b;
-        b = carry << 1;
+    while (c.toBool()) {
+        carry = *this & c;
+        *this ^= c;
+        c = carry << 1;
     }
 }
 
-void Integer::sub(Word& b) {
+void Integer::sub(const Word& b) {
+    Integer c = b;
     Word borrow;
-    while (b.toBool()) {
-        borrow = ~(*this) & b;
-        *this ^= b;
-        b = borrow << 1;
+    while (c.toBool()) {
+        borrow = ~(*this) & c;
+        *this ^= c;
+        c = borrow << 1;
     }
 }
 
-void Integer::mult(Word& b) {
-    Word borrow;
-    while (b.toBool()) {
-        borrow = ~(*this) & b;
-        *this ^= b;
-        b = borrow << 1;
+void Integer::mult(const Word& b) {
+    Integer out;
+    Integer c = b;
+    bool isNegative = this->isNegative() != c.isNegative();
+    abs(*this);
+    abs(c);
+
+    while (c.toBool()) {
+        if ((c & 1).toBool()) {
+            out += *this;
+        }
+        *this <<= 1;
+        c >>= 1;
     }
+
+    if (isNegative) {
+        out.flip();
+    }
+
+    *this = out;
 }
 
 void Integer::flip() {
@@ -42,27 +57,34 @@ bool Integer::isNegative() const {
 }
 
 void Integer::operator += (const Word& b) {
-    Word c = b;
-    this->add(c);
+    this->add(b);
 }
 
 void Integer::operator -= (const Word& b) {
-    Word c = b;
-    this->sub(c);
+    this->sub(b);
+}
+
+void Integer::operator *= (const Word& b) {
+    this->mult(b);
 }
 
 Integer Integer::operator + (const Word& b) const {
     Integer out = *this;
-    Word c = b;
-    out.add(c);
+    out.add(b);
     return out;
 }
 
 Integer Integer::operator - (const Word& b) const {
     Integer out = *this;
-    Word c = b;
-    out.sub(c);
+    out.sub(b);
     return out;
+}
+
+Integer abs(Integer& a) {
+    if (a.isNegative()) {
+        a.flip();
+    }
+    return a;
 }
 
 std::ostream& operator << (std::ostream& os, Integer& a) {
@@ -80,10 +102,8 @@ std::ostream& operator << (std::ostream& os, Integer& a) {
 
     int outLength = 0;
     for (int i = 0; i < a.getSize(); i++) {
-        unsigned int carry = a.bytes[i];
-
         int j = 0;
-        for (; j < outLength || carry; j++) {
+        for (int carry = a.bytes[i]; j < outLength || carry; j++) {
             out[j] = out[j] * IN_BASE + carry;
             carry = out[j] / OUT_BASE;
             out[j] %= OUT_BASE;

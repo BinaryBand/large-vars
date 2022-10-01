@@ -29,5 +29,5 @@ public:
     Word operator | (const Word&) const;
     Word operator ^ (const Word&) const;
     Word operator ~ () const;
-    friend std::string bin(Word w);
+    friend std::string bin(Word);
 };

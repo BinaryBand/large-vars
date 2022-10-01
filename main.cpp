@@ -30,7 +30,10 @@ int main(int argc, char* argv[]) {
     twelve = nineteen - seven;
     cout << bin(twelve) << ' ' << twelve << endl;
 
-    Integer negative = seven - nineteen;
+    Integer negative = seven - 25;
+    cout << bin(negative) << ' ' << negative << endl;
+
+    negative *= 4;
     cout << bin(negative) << ' ' << negative << endl;
 
     return 0;

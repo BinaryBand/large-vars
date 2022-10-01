@@ -13,7 +13,7 @@ Word::Word(int value) {
     bytes = new unsigned char[size]();
 
     for (int i = size - 1; i >= 0; i--) {
-        bytes[i] = value | 0;
+        bytes[i] = value;
         value >>= 8;
     }
 }
